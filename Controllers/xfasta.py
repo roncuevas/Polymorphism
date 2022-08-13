@@ -1,8 +1,13 @@
-from Models import xpersistency
+from Controllers import xpersistency
+import pandas as pd
 
 
-def create_position(start, end):
-    return [start, end]
+# Reads a fasta file and returns a Pandas Dataframe with ID and sequence
+def do_all(filename):
+    diabetes = xpersistency.read_fasta(filename)
+    sequencies = get_fasta_sequences(diabetes)
+    labels = get_fasta_variants(diabetes)
+    return pd.DataFrame(sequencies, index=labels, columns=["secuencias"])
 
 
 # Aligns the sequence with the reference sequence and returns the data [position, reference, sequence]
@@ -13,13 +18,47 @@ def align(sequence, positions):
     end = 0
     for position in positions:
         end += position[1] - position[0] + 1
-        print(str(position[0]) + " - " + str(position[1])) # Prints the start and end of the reference
+        # print(str(position[0]) + " - " + str(position[1]))  # Prints the start and end of the reference
         ref = get_position(reference, position[0], position[1])
-        print(str(start) + " - " + str(end))  # Prints the start and end of the sequence
+        # print(str(start) + " - " + str(end))  # Prints the start and end of the sequence
         seq = get_position(sequence, start, end)
         start = end + 1
         data.append([position[0], ref, seq])
     return data
+
+
+def get_positions_from_string(string):
+    positions = []
+    value = ""
+    for char in string:
+        if char != "-" and char != ";":
+            value += char
+        elif char == "-":
+            positions.append([int(value), ""])
+            value = ""
+        elif char == ";":
+            positions[len(positions) - 1][1] = int(value)
+            value = ""
+        else:
+            print("Foreign character")
+    return positions
+
+
+def get_positions(dictionary, key):
+    positions = []
+    value = ""
+    for char in dictionary[key][2]:
+        if char != "-" and char != ";":
+            value += char
+        elif char == "-":
+            positions.append([int(value), ""])
+            value = ""
+        elif char == ";":
+            positions[len(positions) - 1][1] = int(value)
+            value = ""
+        else:
+            print("Foreign character")
+    return positions
 
 
 def polymorphism(data):
@@ -52,14 +91,15 @@ def get_rcrs_sequence():
 
 def get_position(sequence, start, end):
     start -= 1
-    print("\n" + sequence[start:end])
+    # print("\n" + sequence[start:end])
     return sequence[start:end]
 
 
 def get_header(fasta_format):
     return fasta_format[0]
 
-def get_variant_id(data):
+
+def get_fasta_variants(data):
     labels = list()
     var = ""
     for variant in data:
@@ -74,13 +114,15 @@ def get_variant_id(data):
                 var += char
     return labels
 
-def get_sequences(data):
+
+def get_fasta_sequences(data):
     sequences = list()
     for variant in data:
         sequences.append(variant[1])
     return sequences
 
+
 def fasta_to_dictionary(data):
-    labels = get_variant_id(data)
-    secuence = get_sequences(data)
+    labels = get_fasta_variants(data)
+    secuence = get_fasta_sequences(data)
     return dict(zip(labels, secuence))

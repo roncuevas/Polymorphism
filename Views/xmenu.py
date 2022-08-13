@@ -1,5 +1,5 @@
 import sys
-from Models import xhaplo, xpersistency, xfasta
+from Controllers import xpersistency
 from Utils import xutils
 
 

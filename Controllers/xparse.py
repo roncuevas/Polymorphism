@@ -1,4 +1,4 @@
-from Required import xmltodict
+import xmltodict
 
 
 # Converts XML to python Dictionary

@@ -1,6 +1,7 @@
 import pickle
 import os
 import csv
+import pandas as pd
 
 
 def save_data(obj, filename):
@@ -81,3 +82,16 @@ def read_line(filename, line):
             file_in.readline()
             if i == line - 1:
                 return file_in.readline()
+
+
+def write_pandas_to_csv(dataframe, filename):
+    dataframe.to_csv(filename, index=True, header=True)
+
+
+def read_pandas_from_cvs(filename):
+    return pd.read_csv(filename,
+                       index_col=0)  # Loads the data from csv format and sets the index column as the first column
+
+
+def join_dataframe_to_csv(dataframe, filename):
+    dataframe.to_csv(filename, mode="a", index=False, header=True)

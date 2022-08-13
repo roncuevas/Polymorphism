@@ -1,7 +1,7 @@
 import requests
 
 
-# URL EXAMPLE --- https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=snp&term=NC_012920.1%3Am.16069C%3ET
+# URL EXAMPLE --- https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=snp&term=NC_012920.1%3Am.16189T>A
 
 
 # Function to create the URL from the position, and polymorphism
