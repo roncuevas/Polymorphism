@@ -8,6 +8,7 @@ def convert_xml(data_xml):
 
 # Gets list of SNPs IDs from the data response dictionary to a python list format
 def get_snp_list(data):
+
     if data["eSearchResult"]["IdList"]['Id']:  # If there are SNPs
         return data["eSearchResult"]["IdList"]['Id']
     else:

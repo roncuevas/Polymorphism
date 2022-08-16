@@ -5,7 +5,6 @@ from Controllers import xconection, xparse
 def ncbi(variant_location):
     variant_location = str(variant_location)
     data = xconection.do_all(variant_location)  # Data in xml format by a polymorphism found in ___ position
-
     data = xparse.convert_xml(data)  # Converts data from xml to python dictionary format
 
     # Prints SNPs IDs
