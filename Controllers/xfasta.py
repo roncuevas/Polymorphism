@@ -10,6 +10,8 @@ def do_all(filename):
     return pd.DataFrame(sequencies, index=labels, columns=["secuencias"])
 
 
+
+
 # Aligns the sequence with the reference sequence and returns the data [position, reference, sequence]
 def align(sequence, positions):
     reference = get_rcrs_sequence()

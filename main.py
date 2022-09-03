@@ -1,7 +1,5 @@
 from Controllers import xfasta, xpersistency, xmitomaster, xncbi
-from Models import Polymorphism
-from Models.Variant import Variant
-from Models import *
+
 
 fasta_filename = "diabetes.fasta"
 filename = "haplo.csv"
@@ -15,6 +13,17 @@ def main():
     data = xmitomaster.convert_dataframe(data)
     for index, row in data.iterrows():
         print(row.to_list())
+
+    fasta = xpersistency.read_fasta(fasta_filename)
+    fasta = xfasta.fasta_to_dictionary(fasta)
+    rcrs = xfasta.get_rcrs_sequence()
+    rcrs += rcrs
+    print(type(rcrs))
+    print(rcrs)
+    print(len(rcrs))
+    print(type(fasta))
+    print(fasta)
+    print(rcrs.find(fasta['JF717112.1'][0:200]))
 
 
 def do_all():
